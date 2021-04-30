@@ -12,7 +12,7 @@ namespace SistemaVenda.Entidades
         public int CodigoVenda { get; set; }
         public int CodigoProduto { get; set; }
         public double Quantidade { get; set; }
-        public decimal ValorUniario { get; set; }
+        public decimal ValorUnitario { get; set; }
         public decimal ValorTotal { get; set; }       
         
         public Produto Produto { get; set; } 

@@ -1,0 +1,172 @@
+@{
+    ViewData["Title"] = "Venda";
+}
+
+@model SistemaVenda.Models.VendaViewModel;
+
+@{
+    var disabled = (Model.Codigo == null) ? "disabled" : "";
+}
+
+<h2>Vendas</h2>
+<hr />
+
+<form asp-asp-controller="Venda" asp-action="Cadastro" method="post">
+    <input type="hidden" asp-for="Codigo" value="@Model.Codigo" />
+    <div class="form-group">
+        <div class="col-4">
+            <label>Data</label>
+            <input type="date" asp-for="Data" value="@Model.Data" class="form-control"/>
+            <span asp-validation-for="Data" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-4">
+            <label>Cliente</label>
+            <select asp-for="CodigoCliente" asp-items="@Model.ListaClientes" class="form-control input-lg"></select>
+            <span asp-validation-for="CodigoCliente" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-4">
+            <label>Produtos</label>
+            <select id="cboProduto" onchange="BuscarPrecoProduto(event)" asp-items="@Model.ListaProdutos" class="form-control input-lg"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2">
+            <label>Preço Unitário</label>
+            <input type="number" class="form-control" id="txtPrecoUnitario" disabled />
+        </div>
+        <div class="col-md-2">
+            <label>Quantidade</label>
+            <input type="number" class="form-control" id="txtQtde" onchange="CalcularSubtotal(event)" />
+        </div>
+        <div class="col-md-2">
+            <label>Subtotal</label>
+            <input type="number" class="form-control" id="txtSubtotal" disabled />
+        </div>
+        <div class="col-md-2">
+            <br />
+            <button type="button" class="btn btn-info" onclick="AddProduto()">Adicionar</button>
+            <br />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead class="thead-inverse">
+                    <tr style="background-color: #f6f6f6;">
+                        <th>Produto</th>
+                        <th>Preço Unitário</th>
+                        <th>Quantidade</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="gridProdutos"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-3">
+            <label>Total</label>
+            <input type="text" id="txtTotal" asp-for="Total" value="@Model.Total" class="form-control" />
+            <span asp-validation-for="Total" class="text-danger"></span>
+        </div>
+    </div>
+
+    <textarea asp-for="JsonProdutos" id="txtJsonProdutos" class="col"></textarea>
+
+    <br />
+    <div class="col">
+        <button type="button" class="btn btn-info" onclick="Novo()">Novo</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="button" class="btn btn-warning" onclick="Listagem()">Listagem</button>
+        <button type="button" class="btn btn-danger" onclick="Excluir(@Model.Codigo)" @disabled>Excluir</button>
+    </div>
+</form>
+
+<script>
+    function BuscarPrecoProduto(event) {        
+        var url = `/LerValorProduto/${event.target.value}`;
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("txtPrecoUnitario").value = xhr.responseText;
+            }
+        }
+        xhr.open('GET', url, false);
+        xhr.send(null);
+    }
+
+    function CalcularSubtotal(event) {
+        var PrecoUnitario = document.getElementById("txtPrecoUnitario").value;
+        var Subtotal = PrecoUnitario * event.target.value;
+        document.getElementById("txtSubtotal").value = fixaDuasCasasDecimais(Subtotal);
+    }
+
+    var Itens = new Object();
+    Itens.Produtos = new Array();
+    var gridProdutos = document.getElementById("gridProdutos");
+
+    function AddProduto() {
+        var CodigoProduto = document.getElementById("cboProduto");
+        var Qtde = document.getElementById("txtQtde").value;
+        var ValorUnitario = document.getElementById("txtPrecoUnitario").value;
+        var Subtotal = document.getElementById("txtSubtotal").value;
+
+        Itens.Produtos.push({
+            "CodigoProduto": CodigoProduto.value,
+            "Quantidade": Qtde,
+            "ValorUnitario": ValorUnitario,
+            "ValorTotal": Subtotal
+        });
+
+        document.getElementById("txtJsonProdutos").value = JSON.stringify(Itens.Produtos);
+
+        var linhaGrid = 
+            "<tr id='" + CodigoProduto.value + "'>" +
+                "<td>" + CodigoProduto.options[CodigoProduto.selectedIndex].text + "</td>" +
+                "<td>" + ValorUnitario + "</td>" +
+                "<td>" + Qtde + "</td>" +
+                "<td> R$ " + Subtotal + "</td>" +
+            "</tr>";
+
+        gridProdutos.innerHTML += linhaGrid;
+
+        var total = Number(document.getElementById("txtTotal")
+                    .value
+                    .toString()
+                    .replace("," , ".")) + Number(Subtotal);
+
+        document.getElementById("txtTotal").value = fixaDuasCasasDecimais(total).replace("." , ",");
+
+        document.getElementById("txtQtde").value = "";
+        document.getElementById("txtSubtotal").value = "";
+        document.getElementById("txtPrecoUnitario").value = "";
+        document.getElementById("cboProduto").selectedIndex = -1;
+    }
+
+    function fixaDuasCasasDecimais(num) {
+        return parseFloat(Math.round(num * 100) / 100).toFixed(2);
+    }
+
+    function Novo() {
+        Request("Cadastro");
+    }
+
+    function Listagem() {
+        Request("");
+    }
+
+    function Excluir(Codigo) {
+        Request("Excluir\\" + Codigo);
+    }
+    
+    function Request(request) {
+        window.location = window.origin + "\\Venda\\" + request;
+    }
+</script>
