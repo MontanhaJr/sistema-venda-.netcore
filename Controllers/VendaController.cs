@@ -130,7 +130,9 @@ namespace SistemaVenda.Controllers
         public IActionResult Excluir(int id)
         {
             var objVenda = mContext.Venda.Where(x => x.Codigo == id).FirstOrDefault();
+            var vendaProduto = mContext.VendaProdutos.Where(x => x.CodigoVenda == id).ToList();
 
+            mContext.RemoveRange(vendaProduto);
             mContext.Remove(objVenda);
             mContext.SaveChanges();
 
