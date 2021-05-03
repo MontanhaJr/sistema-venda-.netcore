@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SistemaVenda.DAL;
 using SistemaVenda.Helpers;
 using SistemaVenda.Models;
@@ -12,14 +13,21 @@ namespace SistemaVenda.Controllers
     public class LoginController : Controller
     {
         protected ApplicationDbContext mContext;
+        protected IHttpContextAccessor HttpContextAccessor;
 
-        public LoginController(ApplicationDbContext context)
+        public LoginController(ApplicationDbContext context, IHttpContextAccessor httpContext)
         {
             mContext = context;
+            HttpContextAccessor = httpContext;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
+            if (id != null && id == 0)
+            {
+                HttpContextAccessor.HttpContext.Session.Clear();
+            }
+
             return View();
         }
 
@@ -41,6 +49,11 @@ namespace SistemaVenda.Controllers
                 }
                 else
                 {
+                    HttpContextAccessor.HttpContext.Session.SetInt32(Sessao.LOGADO, 1);
+                    HttpContextAccessor.HttpContext.Session.SetInt32(Sessao.CODIGO_USUARIO, (int)autenticacao.Codigo);
+                    HttpContextAccessor.HttpContext.Session.SetString(Sessao.NOME_USUARIO, autenticacao.Nome);
+                    HttpContextAccessor.HttpContext.Session.SetString(Sessao.EMAIL_USUARIO, autenticacao.Email);
+
                     return RedirectToAction("Index", "Home");
                 }
             }
