@@ -22,7 +22,7 @@ namespace SistemaVenda
         }
 
         public IConfiguration Configuration { get; }
-
+         
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -30,8 +30,7 @@ namespace SistemaVenda
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
             services.AddSession();
         }
 
