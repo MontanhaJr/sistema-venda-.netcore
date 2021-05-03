@@ -14422,6 +14422,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\Views\\Login\\Index.cshtml",
+      "TargetPath": "Views\\Login\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\Views\\Venda\\Index.cshtml",
       "TargetPath": "Views\\Venda\\Index.cshtml",
       "FileKind": "mvc"
