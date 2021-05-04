@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repositorio.Entidades;
+using Repositorio.Repositorio;
 using SistemaVenda.DAL;
 using System;
 using System.Collections.Generic;
@@ -32,8 +34,14 @@ namespace SistemaVenda
         {
             services.AddControllersWithViews();
 
+            //Fica por enquanto, pois o projeto ainda não foi completamente migrado para DDD
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
+            
+            //A princípio será definitivo
+            services.AddDbContext<Repositorio.Contexto.ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
+
             services.AddHttpContextAccessor();
             services.AddSession();
 
@@ -42,6 +50,9 @@ namespace SistemaVenda
 
             //Domínio
             services.AddScoped<IServicoCategoria, ServicoCategoria>();
+
+            //Repositório
+            services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
