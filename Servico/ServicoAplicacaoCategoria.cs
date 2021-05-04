@@ -1,6 +1,7 @@
 ﻿using Aplicacao.Servico.Interfaces;
 using Dominio.Entidades.Interfaces;
 using Dominio.Servicos;
+using SistemaVenda.Dominio.Entidades;
 using SistemaVenda.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,35 @@ namespace Aplicacao.Servico
         public ServicoAplicacaoCategoria(IServicoCategoria servicoCategoria)
         {
             ServicoCategoria = servicoCategoria;
+        }
+
+        public void Cadastrar(CategoriaViewModel categoria)
+        {
+            Categoria item = new Categoria()
+            {
+                Codigo = categoria.Codigo,
+                Descricao = categoria.Descricao
+            };
+
+            ServicoCategoria.Cadastrar(item);
+        }
+
+        public CategoriaViewModel CarregarRegistro(int codigoCategoria)
+        {
+            var registro = ServicoCategoria.CarregarRegistro(codigoCategoria);
+
+            CategoriaViewModel categoria = new CategoriaViewModel()
+            {
+                Codigo = registro.Codigo,
+                Descricao = registro.Descricao
+            };
+
+            return categoria;
+        }
+
+        public void Excluir(int id)
+        {
+            ServicoCategoria.Excluir(id);
         }
 
         public IEnumerable<CategoriaViewModel> Listagem()
