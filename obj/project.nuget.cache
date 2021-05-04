@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1W23zwVV9L2X+Eexdr70PHXlLsZL/6JnjlC3W2kaH9720h9LV8tBCuo9sGggvkoOCwY9cujOaBmkvLQxReQe7Q==",
+  "dgSpecHash": "JTczs7WGdkoXKCOJ58lPYlH2L+DdOSI9NC2fkR1YMZMccP7EpnJTgdOS8egLGmDwhQTIFPu0OvVylQm8+5hVBg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\SistemaVenda.csproj",
+  "projectFilePath": "C:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\Aplicacao.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dev\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Dev\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",

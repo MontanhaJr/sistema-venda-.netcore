@@ -1,3 +1,7 @@
+using Aplicacao.Servico;
+using Aplicacao.Servico.Interfaces;
+using Dominio.Entidades.Interfaces;
+using Dominio.Servicos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +36,12 @@ namespace SistemaVenda
             options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
             services.AddHttpContextAccessor();
             services.AddSession();
+
+            //Serviço Aplicação
+            services.AddScoped<IServicoAplicacaoCategoria, ServicoAplicacaoCategoria>();
+
+            //Domínio
+            services.AddScoped<IServicoCategoria, ServicoCategoria>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

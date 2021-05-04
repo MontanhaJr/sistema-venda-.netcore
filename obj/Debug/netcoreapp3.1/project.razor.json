@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\SistemaVenda.csproj",
+  "FilePath": "c:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\Aplicacao.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14399,7 +14399,7 @@
     ],
     "CSharpLanguageVersion": 800
   },
-  "RootNamespace": "SistemaVenda",
+  "RootNamespace": "Aplicacao",
   "Documents": [
     {
       "FilePath": "c:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\Views\\_ViewImports.cshtml",
