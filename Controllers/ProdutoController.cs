@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Aplicacao.Servico.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using SistemaVenda.DAL;
 using SistemaVenda.Entidades;
 using SistemaVenda.Models;
@@ -13,57 +12,31 @@ namespace SistemaVenda.Controllers
 {
     public class ProdutoController : Controller
     {
-        protected ApplicationDbContext mContext;
+        readonly IServicoAplicacaoProduto ServicoAplicacaoProduto;
+        readonly IServicoAplicacaoCategoria ServicoAplicacaoCategoria;
 
-        public ProdutoController(ApplicationDbContext context)
+        public ProdutoController(IServicoAplicacaoProduto servicoAplicacaoProduto, IServicoAplicacaoCategoria servicoAplicacaoCategoria)
         {
-            mContext = context;
+            ServicoAplicacaoProduto = servicoAplicacaoProduto;
+            ServicoAplicacaoCategoria = servicoAplicacaoCategoria;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Produto> lista = mContext.Produto.Include(x => x.Categoria).ToList();
-            mContext.Dispose();
-            return View(lista);
-        }
-
-        private IEnumerable<SelectListItem> ListaCategoria()
-        {
-            List<SelectListItem> lista = new List<SelectListItem>();
-
-            lista.Add(new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = string.Empty
-            });
-
-            foreach (var item in mContext.Categoria.ToList())
-            {
-                lista.Add(new SelectListItem()
-                {
-                    Value = item.Codigo.ToString(),
-                    Text = item.Descricao.ToString()
-                });
-            }
-
-            return lista;
+            return View(ServicoAplicacaoProduto.Listagem());
         }
 
         [HttpGet]
         public IActionResult Cadastro(int? id)
         {
             ProdutoViewModel viewModel = new ProdutoViewModel();
-            viewModel.ListaCategorias = ListaCategoria();
 
-            if(id != null)
+            if (id != null)
             {
-                var entidade = mContext.Produto.Where(x => x.Codigo == id).FirstOrDefault();
-                viewModel.Codigo = entidade.Codigo;
-                viewModel.Descricao = entidade.Descricao;
-                viewModel.Quantidade = entidade.Quantidade;
-                viewModel.Valor = entidade.Valor;
-                viewModel.CodigoCategoria = entidade.CodigoCategoria;
+                viewModel = ServicoAplicacaoProduto.CarregarRegistro((int)id);
             }
+            
+            viewModel.ListaCategorias = ServicoAplicacaoCategoria.ListaCategoriasDropDownList();
 
             return View(viewModel);
         }
@@ -71,31 +44,13 @@ namespace SistemaVenda.Controllers
         [HttpPost]
         public IActionResult Cadastro(ProdutoViewModel entidade)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                Produto objProduto = new Produto()
-                {
-                    Codigo = entidade.Codigo,
-                    Descricao = entidade.Descricao,
-                    Quantidade = entidade.Quantidade,
-                    Valor = (decimal)entidade.Valor,
-                    CodigoCategoria = (int)entidade.CodigoCategoria
-                };
-
-                if(entidade.Codigo == null)
-                {
-                    mContext.Produto.Add(objProduto);
-                }
-                else
-                {
-                    mContext.Produto.Update(objProduto);
-                }
-
-                mContext.SaveChanges();
+                ServicoAplicacaoProduto.Cadastrar(entidade);
             }
             else
             {
-                entidade.ListaCategorias = ListaCategoria();
+                entidade.ListaCategorias = ServicoAplicacaoCategoria.ListaCategoriasDropDownList();
                 return View(entidade);
             }
 
@@ -105,11 +60,7 @@ namespace SistemaVenda.Controllers
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            var objProduto = mContext.Produto.Where(x => x.Codigo == id).FirstOrDefault();
-
-            mContext.Remove(objProduto);
-            mContext.SaveChanges();
-         
+            ServicoAplicacaoProduto.Excluir(id);
             return RedirectToAction("Index");
         }
     }
