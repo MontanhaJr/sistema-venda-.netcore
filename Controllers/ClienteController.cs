@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aplicacao.Servico.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using SistemaVenda.DAL;
 using SistemaVenda.Entidades;
 using SistemaVenda.Models;
@@ -11,18 +12,16 @@ namespace SistemaVenda.Controllers
 {
     public class ClienteController : Controller
     {
-        protected ApplicationDbContext mContext;
+        readonly IServicoAplicacaoCliente ServicoAplicacaoCliente;
 
-        public ClienteController(ApplicationDbContext context)
+        public ClienteController(IServicoAplicacaoCliente servicoAplicacaoCliente)
         {
-            mContext = context;
+            ServicoAplicacaoCliente = servicoAplicacaoCliente;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Cliente> lista = mContext.Cliente.ToList();
-            mContext.Dispose();
-            return View(lista);
+            return View(ServicoAplicacaoCliente.Listagem());
         }
 
         [HttpGet]
@@ -30,14 +29,9 @@ namespace SistemaVenda.Controllers
         {
             ClienteViewModel viewModel = new ClienteViewModel();
 
-            if(id != null)
+            if (id != null)
             {
-                var entidade = mContext.Cliente.Where(x => x.Codigo == id).FirstOrDefault();
-                viewModel.Codigo = entidade.Codigo;
-                viewModel.Nome = entidade.Nome;
-                viewModel.CNPJ_CPF = entidade.CNPJ_CPF;
-                viewModel.Email = entidade.Email;
-                viewModel.Celular = entidade.Celular;
+                viewModel = ServicoAplicacaoCliente.CarregarRegistro((int)id);
             }
 
             return View(viewModel);
@@ -46,27 +40,9 @@ namespace SistemaVenda.Controllers
         [HttpPost]
         public IActionResult Cadastro(ClienteViewModel entidade)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                Cliente objCliente = new Cliente()
-                {
-                    Codigo = entidade.Codigo,
-                    Nome = entidade.Nome,
-                    CNPJ_CPF = entidade.CNPJ_CPF,
-                    Email = entidade.Email,
-                    Celular = entidade.Celular
-                };
-
-                if(entidade.Codigo == null)
-                {
-                    mContext.Cliente.Add(objCliente);
-                }
-                else
-                {
-                    mContext.Cliente.Update(objCliente);
-                }
-
-                mContext.SaveChanges();
+                ServicoAplicacaoCliente.Cadastrar(entidade);
             }
             else
             {
@@ -79,11 +55,7 @@ namespace SistemaVenda.Controllers
         [HttpGet]
         public IActionResult Excluir(int id)
         {
-            var objCliente = mContext.Cliente.Where(x => x.Codigo == id).FirstOrDefault();
-
-            mContext.Remove(objCliente);
-            mContext.SaveChanges();
-         
+            ServicoAplicacaoCliente.Excluir(id);
             return RedirectToAction("Index");
         }
     }
