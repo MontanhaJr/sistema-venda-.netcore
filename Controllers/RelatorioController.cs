@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Aplicacao.Servico.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using SistemaVenda.DAL;
 using SistemaVenda.Models;
 using System;
@@ -10,24 +11,16 @@ namespace SistemaVenda.Controllers
 {
     public class RelatorioController : Controller
     {
-        protected ApplicationDbContext mContext;
+        readonly IServicoAplicacaoVenda ServicoVenda;
 
-        public RelatorioController(ApplicationDbContext context)
+        public RelatorioController(IServicoAplicacaoVenda servicoVenda)
         {
-            mContext = context;
+            ServicoVenda = servicoVenda;
         }
         
         public IActionResult Grafico()
         {
-            var lista = (from r in mContext.VendaProdutos
-                         group r by new { r.CodigoProduto, r.Produto.Descricao }
-                   into g
-                         select new GraficoViewModel
-                         {
-                             CodigoProduto = g.Key.CodigoProduto,
-                             Descricao = g.Key.Descricao,
-                             TotalVendido = g.Sum(x => x.Quantidade)
-                         }).ToList();
+            var lista = ServicoVenda.ListaGrafico();
 
             string valores = string.Empty;
             string labels = string.Empty;
