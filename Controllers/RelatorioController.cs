@@ -1,6 +1,5 @@
 ﻿using Aplicacao.Servico.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using SistemaVenda.DAL;
 using SistemaVenda.Models;
 using System;
 using System.Collections.Generic;

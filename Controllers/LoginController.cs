@@ -1,7 +1,6 @@
 ﻿using Aplicacao.Servico.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SistemaVenda.DAL;
 using SistemaVenda.Helpers;
 using SistemaVenda.Models;
 using System;

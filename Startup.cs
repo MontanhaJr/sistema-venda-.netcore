@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repositorio.Contexto;
 using Repositorio.Entidades;
 using Repositorio.Repositorio;
-using SistemaVenda.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,13 +33,8 @@ namespace SistemaVenda
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            //Fica por enquanto, pois o projeto ainda não foi completamente migrado para DDD
+                                  
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
-            
-            //A princípio será definitivo
-            services.AddDbContext<Repositorio.Contexto.ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
 
             services.AddHttpContextAccessor();
