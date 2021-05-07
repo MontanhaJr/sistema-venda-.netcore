@@ -1492,6 +1492,20 @@
         "runtime": {
           "bin/placeholder/Dominio.dll": {}
         }
+      },
+      "Repositorio/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Dominio": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.5"
+        },
+        "compile": {
+          "bin/placeholder/Repositorio.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Repositorio.dll": {}
+        }
       }
     }
   },
@@ -5709,18 +5723,25 @@
       "type": "project",
       "path": "../Dominio/Dominio.csproj",
       "msbuildProject": "../Dominio/Dominio.csproj"
+    },
+    "Repositorio/1.0.0": {
+      "type": "project",
+      "path": "../Repositorio/Repositorio.csproj",
+      "msbuildProject": "../Repositorio/Repositorio.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Dominio >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 5.0.5",
-      "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.5"
+      "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.5",
+      "Repositorio >= 1.0.0"
     ]
   },
   "packageFolders": {
     "C:\\Users\\Dev\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -5732,10 +5753,12 @@
       "outputPath": "C:\\Users\\Dev\\Documents\\Estudar.NET\\SistemaVenda\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\Dev\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -5752,6 +5775,9 @@
           "projectReferences": {
             "C:\\Users\\Dev\\Documents\\Estudar.NET\\Dominio\\Dominio.csproj": {
               "projectPath": "C:\\Users\\Dev\\Documents\\Estudar.NET\\Dominio\\Dominio.csproj"
+            },
+            "C:\\Users\\Dev\\Documents\\Estudar.NET\\Repositorio\\Repositorio.csproj": {
+              "projectPath": "C:\\Users\\Dev\\Documents\\Estudar.NET\\Repositorio\\Repositorio.csproj"
             }
           }
         }
@@ -5793,7 +5819,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
