@@ -50,12 +50,14 @@ namespace SistemaVenda
             services.AddScoped<IServicoAplicacaoCliente, ServicoAplicacaoCliente>();
             services.AddScoped<IServicoAplicacaoProduto, ServicoAplicacaoProduto>();
             services.AddScoped<IServicoAplicacaoVenda, ServicoAplicacaoVenda>();
+            services.AddScoped<IServicoAplicacaoUsuario, ServicoAplicacaoUsuario>();
 
             //Domínio
             services.AddScoped<IServicoCategoria, ServicoCategoria>();
             services.AddScoped<IServicoCliente, ServicoCliente>();
             services.AddScoped<IServicoProduto, ServicoProduto>();
             services.AddScoped<IServicoVenda, ServicoVenda>();
+            services.AddScoped<IServicoUsuario, ServicoUsuario>();
 
             //Repositório
             services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
@@ -63,6 +65,7 @@ namespace SistemaVenda
             services.AddScoped<IRepositorioProduto, RepositorioProduto>();
             services.AddScoped<IRepositorioVenda, RepositorioVenda>();
             services.AddScoped<IRepositorioVendaProdutos, RepositorioVendaProdutos>();
+            services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
