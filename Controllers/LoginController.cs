@@ -1,6 +1,6 @@
-﻿using Aplicacao.Servico.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SistemaVenda.DAL;
 using SistemaVenda.Helpers;
 using SistemaVenda.Models;
 using System;
@@ -12,12 +12,12 @@ namespace SistemaVenda.Controllers
 {
     public class LoginController : Controller
     {
+        protected ApplicationDbContext mContext;
         protected IHttpContextAccessor HttpContextAccessor;
-        readonly IServicoAplicacaoUsuario ServicoAplicacaoUsuario;
 
-        public LoginController(IServicoAplicacaoUsuario servicoAplicacaoUsuario, IHttpContextAccessor httpContext)
+        public LoginController(ApplicationDbContext context, IHttpContextAccessor httpContext)
         {
-            ServicoAplicacaoUsuario = servicoAplicacaoUsuario;
+            mContext = context;
             HttpContextAccessor = httpContext;
         }
 
@@ -37,23 +37,24 @@ namespace SistemaVenda.Controllers
             ViewData["ErroLogin"] = string.Empty;
             if (ModelState.IsValid)
             {
+                var autenticacao = mContext.Usuario.Where(x => 
+                                x.Email == model.Email && 
+                                x.Senha == Criptografia.GetMd5Hash(model.Senha))
+                                .FirstOrDefault();
 
-                bool login = ServicoAplicacaoUsuario.ValidarLogin(model.Email, Criptografia.GetMd5Hash(model.Senha));
-                var usuario = ServicoAplicacaoUsuario.RetornarDadosUsuario(model.Email, Criptografia.GetMd5Hash(model.Senha));
-
-                if (login)
-                {
-                    HttpContextAccessor.HttpContext.Session.SetInt32(Sessao.LOGADO, 1);
-                    HttpContextAccessor.HttpContext.Session.SetInt32(Sessao.CODIGO_USUARIO, (int)usuario.Codigo);
-                    HttpContextAccessor.HttpContext.Session.SetString(Sessao.NOME_USUARIO, usuario.Nome);
-                    HttpContextAccessor.HttpContext.Session.SetString(Sessao.EMAIL_USUARIO, usuario.Email);
-
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+                if (autenticacao == null)
                 {
                     ViewData["ErroLogin"] = "Email e/ou Senha incorretos";
                     return View(model);
+                }
+                else
+                {
+                    HttpContextAccessor.HttpContext.Session.SetInt32(Sessao.LOGADO, 1);
+                    HttpContextAccessor.HttpContext.Session.SetInt32(Sessao.CODIGO_USUARIO, (int)autenticacao.Codigo);
+                    HttpContextAccessor.HttpContext.Session.SetString(Sessao.NOME_USUARIO, autenticacao.Nome);
+                    HttpContextAccessor.HttpContext.Session.SetString(Sessao.EMAIL_USUARIO, autenticacao.Email);
+
+                    return RedirectToAction("Index", "Home");
                 }
             }
             else

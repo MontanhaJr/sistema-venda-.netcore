@@ -89,5 +89,3 @@ C:\Users\Dev\Documents\Estudar.NET\SistemaVenda\obj\Debug\netcoreapp3.1\Aplicaca
 C:\Users\Dev\Documents\Estudar.NET\SistemaVenda\obj\Debug\netcoreapp3.1\Aplicacao.dll
 C:\Users\Dev\Documents\Estudar.NET\SistemaVenda\obj\Debug\netcoreapp3.1\Aplicacao.pdb
 C:\Users\Dev\Documents\Estudar.NET\SistemaVenda\obj\Debug\netcoreapp3.1\Aplicacao.genruntimeconfig.cache
-C:\Users\Dev\Documents\Estudar.NET\SistemaVenda\bin\Debug\netcoreapp3.1\Repositorio.dll
-C:\Users\Dev\Documents\Estudar.NET\SistemaVenda\bin\Debug\netcoreapp3.1\Repositorio.pdb

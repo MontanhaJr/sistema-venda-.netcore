@@ -1,5 +1,5 @@
-﻿using Aplicacao.Servico.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SistemaVenda.DAL;
 using SistemaVenda.Models;
 using System;
 using System.Collections.Generic;
@@ -10,16 +10,24 @@ namespace SistemaVenda.Controllers
 {
     public class RelatorioController : Controller
     {
-        readonly IServicoAplicacaoVenda ServicoVenda;
+        protected ApplicationDbContext mContext;
 
-        public RelatorioController(IServicoAplicacaoVenda servicoVenda)
+        public RelatorioController(ApplicationDbContext context)
         {
-            ServicoVenda = servicoVenda;
+            mContext = context;
         }
         
         public IActionResult Grafico()
         {
-            var lista = ServicoVenda.ListaGrafico();
+            var lista = (from r in mContext.VendaProdutos
+                         group r by new { r.CodigoProduto, r.Produto.Descricao }
+                   into g
+                         select new GraficoViewModel
+                         {
+                             CodigoProduto = g.Key.CodigoProduto,
+                             Descricao = g.Key.Descricao,
+                             TotalVendido = g.Sum(x => x.Quantidade)
+                         }).ToList();
 
             string valores = string.Empty;
             string labels = string.Empty;
@@ -31,7 +39,7 @@ namespace SistemaVenda.Controllers
             {
                 valores += "'" + item.TotalVendido.ToString() + "',";
                 labels += "'" + item.Descricao.ToString() + "',";
-                cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000)) + "',";
+                cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000) + "',");
             }
 
             ViewBag.Valores = valores;

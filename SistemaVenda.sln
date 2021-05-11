@@ -13,9 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-Repositório", "3-Reposit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Infraestrutura", "4-Infraestrutura", "{A35A2CB5-7678-4A2B-97DB-6CF1EBA2B8D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "..\Dominio\Dominio.csproj", "{0C968CFB-AE19-4ECB-9825-2313B35AB795}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositorio", "..\Repositorio\Repositorio.csproj", "{797C8968-6152-4786-933E-920792FC14C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "..\Dominio\Dominio.csproj", "{0C968CFB-AE19-4ECB-9825-2313B35AB795}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{0C968CFB-AE19-4ECB-9825-2313B35AB795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C968CFB-AE19-4ECB-9825-2313B35AB795}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C968CFB-AE19-4ECB-9825-2313B35AB795}.Release|Any CPU.Build.0 = Release|Any CPU
-		{797C8968-6152-4786-933E-920792FC14C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{797C8968-6152-4786-933E-920792FC14C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{797C8968-6152-4786-933E-920792FC14C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{797C8968-6152-4786-933E-920792FC14C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,7 +36,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E77377B2-761B-4953-B408-31FEA9C5AD02} = {461ABC69-FF16-4B12-AD1D-4E136688AE17}
 		{0C968CFB-AE19-4ECB-9825-2313B35AB795} = {4F977343-4F47-481D-A237-28747DCCC609}
-		{797C8968-6152-4786-933E-920792FC14C1} = {7966B7EC-DC8B-41AC-B262-555BC86BAF7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B73A937-6450-4E42-8170-B0302F3DC269}
