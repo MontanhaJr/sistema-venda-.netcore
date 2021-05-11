@@ -1,0 +1,12 @@
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\bin\Debug\netcoreapp3.1\Repositorio.deps.json
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\bin\Debug\netcoreapp3.1\Repositorio.dll
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\bin\Debug\netcoreapp3.1\Repositorio.pdb
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\bin\Debug\netcoreapp3.1\Dominio.dll
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\bin\Debug\netcoreapp3.1\Dominio.pdb
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\obj\Debug\netcoreapp3.1\Repositorio.csprojAssemblyReference.cache
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\obj\Debug\netcoreapp3.1\Repositorio.AssemblyInfoInputs.cache
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\obj\Debug\netcoreapp3.1\Repositorio.AssemblyInfo.cs
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\obj\Debug\netcoreapp3.1\Repositorio.csproj.CoreCompileInputs.cache
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\obj\Debug\netcoreapp3.1\Repositorio.csproj.CopyComplete
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\obj\Debug\netcoreapp3.1\Repositorio.dll
+C:\Users\Dev\Documents\Estudar.NET\Repositorio\obj\Debug\netcoreapp3.1\Repositorio.pdb
