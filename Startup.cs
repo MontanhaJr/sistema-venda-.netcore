@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SistemaVenda.DAL;
+using Repositorio.Contexto;
+using Repositorio.Entidades;
+using Repositorio.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,17 +33,34 @@ namespace SistemaVenda
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+                                  
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
+
             services.AddHttpContextAccessor();
             services.AddSession();
 
             //Serviço Aplicação
             services.AddScoped<IServicoAplicacaoCategoria, ServicoAplicacaoCategoria>();
+            services.AddScoped<IServicoAplicacaoCliente, ServicoAplicacaoCliente>();
+            services.AddScoped<IServicoAplicacaoProduto, ServicoAplicacaoProduto>();
+            services.AddScoped<IServicoAplicacaoVenda, ServicoAplicacaoVenda>();
+            services.AddScoped<IServicoAplicacaoUsuario, ServicoAplicacaoUsuario>();
 
             //Domínio
             services.AddScoped<IServicoCategoria, ServicoCategoria>();
+            services.AddScoped<IServicoCliente, ServicoCliente>();
+            services.AddScoped<IServicoProduto, ServicoProduto>();
+            services.AddScoped<IServicoVenda, ServicoVenda>();
+            services.AddScoped<IServicoUsuario, ServicoUsuario>();
+
+            //Repositório
+            services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
+            services.AddScoped<IRepositorioCliente, RepositorioCliente>();
+            services.AddScoped<IRepositorioProduto, RepositorioProduto>();
+            services.AddScoped<IRepositorioVenda, RepositorioVenda>();
+            services.AddScoped<IRepositorioVendaProdutos, RepositorioVendaProdutos>();
+            services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

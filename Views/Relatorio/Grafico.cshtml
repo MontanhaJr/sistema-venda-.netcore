@@ -2,11 +2,22 @@
     ViewData["Title"] = "Gráfico";
 }
 
+<style>
+    .grafico {
+        width: 60vh;
+        margin: 0 auto;
+    }
+
+    h2 {
+        text-align: center;
+    }
+</style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
 
 <h2>Total de Vendas por Produto</h2>
 
-<canvas id="myChart"></canvas>
+<canvas id="myChart" class="grafico"></canvas>
 
 
 <script>
