@@ -31,7 +31,7 @@ namespace SistemaVenda.Controllers
             {
                 valores += "'" + item.TotalVendido.ToString() + "',";
                 labels += "'" + item.Descricao.ToString() + "',";
-                cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000) + "',");
+                cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000)) + "',";
             }
 
             ViewBag.Valores = valores;
